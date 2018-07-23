@@ -5,20 +5,17 @@ class Book extends Component {
         this.props.sendShelfData(this.props.book, value);
     }
     render() {
-        let bookCover;
-        if (this.props.book.imageLinks !== undefined) {
-            
-        }
-        let image = {
+        const image = {
             width: 128,
             height: 193,
-            
+            backgroundImage: `url(${this.props.book.imageLinks.thumbnail})`
+        
         }
         return(
             <li>
             <div className="book">
               <div className="book-top">
-                <div className="book-cover" style={{image}}></div>
+                <div className="book-cover" style={image}></div>
                 <div className="book-shelf-changer">
                   <select
                    value={this.props.book.shelf}
@@ -33,7 +30,7 @@ class Book extends Component {
                 </div>
               </div>
               <div className="book-title">{this.props.book.title}</div>
-              <div className="book-authors">{this.props.book.authors ? this.props.book.authors.join(', '): ''}</div>
+              <div className="book-authors">{this.props.book.authors}</div>
             </div>
 </li>
         )

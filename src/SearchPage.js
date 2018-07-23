@@ -2,33 +2,38 @@ import React from 'react'
 import './App.css'
 import {Route, Link} from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
+import Book from './Book';
 class SearchPage extends React.Component {
   state = {
-    query: '',
-    showingBooks: [],
+    books: []
   }
-  updateQuery = (query) => {
-    this.setState({query: query})
-    let showingBooks = []
-    if (query) {
-      BooksAPI.search(query).then(response => {
-        if (response.length) {
-          showingBooks = response.map(b => {
-            const index = this.state.books.findIndex(c => c.id === b.id)
-            if( index >= 0 ) {
-              return this.state.books[index]
-            } else {
-              return b
+  updateQuery(query) {
+    if (!!query) {
+      BooksAPI.search(query).then(data => {
+        if (!!data.error){
+          console.log('data error')
+          this.setState({
+            books: []
+          });
+        } else {
+          let updateShelf = data.map(book => {
+            for (var i = 0; i < this.props.shelfedBooks.length; i++) {
+              if (this.props.shelfedBooks[i].id === book.id) {
+                book.shelf = this.props.shelfedBooks[i].shelf;
+              }
             }
+            return book;
+          })
+          this.setState({
+            books: updateShelf
           })
         }
-        this.setState({showingBooks})
       })
     }
-    else {
-      this.setState({showingBooks})
-    }
   }
+  sendShelfData(value) {
+    this.props.sendShelfData(this.props.book, value);
+}
     render(){ 
         return ( 
         <div className="search-books">
@@ -44,7 +49,11 @@ class SearchPage extends React.Component {
           </div>
         </div>
         <div className="search-books-results">
-          <ol className="books-grid">
+          <ol className="books-grid">{
+            this.state.books.length !== 0 && this.state.books.map((book, index)=>{
+              <Book key = {index} book = {book} sendShelfData = {(book, shelf) => {this.sendShelfData(book, shelf)}} />
+            })
+          }
           </ol>
           
         </div>
