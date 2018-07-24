@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 class Book extends Component {
-    handleShelfData(value) {
+    handleData(value) {
         this.props.sendShelfData(this.props.book, value);
     }
     render() {
@@ -18,8 +18,8 @@ class Book extends Component {
                 <div className="book-cover" style={image}></div>
                 <div className="book-shelf-changer">
                   <select
-                   value={this.props.book.shelf}
-                   onChange={(event) => this.handleShelfData(event.target.value)}
+                   value={this.props.book.shelf || "none"}
+                   onChange={(event) => this.handleData(event.target.value)}
                   >
                     <option value="move" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>

@@ -6,7 +6,6 @@ import Book from './Book';
 class SearchPage extends React.Component {
   state = {
     books: [],
-    book: [],
   }
   updateQuery(query) {
     if (!!query) {
@@ -33,8 +32,8 @@ class SearchPage extends React.Component {
       })
     }
   }
-  sendShelfData(value) {
-    this.props.sendShelfData(this.props.book, value);
+  sendShelfData(book, shelf) {
+    this.props.sendShelfData(book, shelf);
 }
     render(){ 
         return ( 
