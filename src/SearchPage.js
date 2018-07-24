@@ -5,13 +5,14 @@ import * as BooksAPI from './BooksAPI'
 import Book from './Book';
 class SearchPage extends React.Component {
   state = {
-    books: []
+    books: [],
+    book: [],
   }
   updateQuery(query) {
     if (!!query) {
       BooksAPI.search(query).then(data => {
         if (!!data.error){
-          console.log('data error')
+          console.log(data.error)
           this.setState({
             books: []
           });
@@ -22,6 +23,7 @@ class SearchPage extends React.Component {
                 book.shelf = this.props.shelfedBooks[i].shelf;
               }
             }
+            console.log(book);
             return book;
           })
           this.setState({
@@ -51,7 +53,8 @@ class SearchPage extends React.Component {
         <div className="search-books-results">
           <ol className="books-grid">{
             this.state.books.length !== 0 && this.state.books.map((book, index)=>{
-              <Book key = {index} book = {book} sendShelfData = {(book, shelf) => {this.sendShelfData(book, shelf)}} />
+           return <Book key = {index} book = {book} sendShelfData = {(book, shelf) => {this.sendShelfData(book, shelf)}}
+           />
             })
           }
           </ol>

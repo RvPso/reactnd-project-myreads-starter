@@ -27,13 +27,12 @@ class BooksApp extends React.Component {
     return (
       <div className="app">
             <Route exact path='/search' render={()=>(
-         < SearchPage
+         <SearchPage
          sendShelfData={ (book,shelf) => {
           this.handleShelfData(book, shelf)
          }
         }
         shelfedBooks = {this.state.books}
-        
          />
 )}
   />
