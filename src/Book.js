@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 
 class Book extends Component {
-    handleData(value) {
+    handleShelfData(value) {
         this.props.sendShelfData(this.props.book, value);
     }
     render() {
         const image = {
             width: 128,
             height: 193,
-            backgroundImage: `url(${this.props.book.imageLinks.thumbnail})`
+            backgroundImage: this.props.book.imageLinks ?
+        `url(${this.props.book.imageLinks.thumbnail})` : null
         
         }
         return(
@@ -19,7 +20,7 @@ class Book extends Component {
                 <div className="book-shelf-changer">
                   <select
                    value={this.props.book.shelf || "none"}
-                   onChange={(event) => this.handleData(event.target.value)}
+                   onChange={(event) => this.handleShelfData(event.target.value)}
                   >
                     <option value="move" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>

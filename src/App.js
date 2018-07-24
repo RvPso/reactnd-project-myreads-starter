@@ -11,7 +11,7 @@ class BooksApp extends React.Component {
     books: []
   }
   
-  componentDidMount() { //subject to change
+  componentDidMount() {
     BooksAPI.getAll().then(data => 
       this.setState({books : data})
     )}
