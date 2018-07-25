@@ -8,7 +8,9 @@ class SearchPage extends React.Component {
     books: [],
   }
   updateQuery(query) {
-    if (!!query) {
+    if (query === '') {
+      setTimeout(function(){ this.setState({ books: [] }); }.bind(this), 1000);
+    } 
       BooksAPI.search(query).then(data => {
         if (data.error){
           console.log(data.error)
@@ -29,7 +31,7 @@ class SearchPage extends React.Component {
           })
         }
       })
-    }
+    
   }
   sendShelfData(book, shelf) {
     this.props.sendShelfData(book, shelf);

@@ -2,6 +2,8 @@
 
 Given a static template, it was my job to complete the webpage to be fully functioning.
 
+This project is a bookshelf app where you can add books from an API server and categorize books you read, want to read, or currently reading.
+
 ## How to Run
 
 To start the project right away:
