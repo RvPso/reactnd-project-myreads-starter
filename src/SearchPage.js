@@ -6,11 +6,11 @@ import Book from './Book';
 class SearchPage extends React.Component {
   state = {
     books: [],
+    query: '',
   }
   updateQuery(query) {
-    if (query === '') {
-      setTimeout(function(){ this.setState({ books: [] }); }.bind(this), 1000);
-    } 
+    this.setState({query: query})
+      if (query.trim()) {
       BooksAPI.search(query).then(data => {
         if (data.error){
           console.log(data.error)
@@ -18,7 +18,7 @@ class SearchPage extends React.Component {
             books: []
           });
         } else {
-          let updateShelf = data.map(book => {
+          let updateShelf = data.filter(book => {
             for (let i = 0; i < this.props.shelfedBooks.length; i++) {
               if (this.props.shelfedBooks[i].id === book.id) {
                 book.shelf = this.props.shelfedBooks[i].shelf;
@@ -31,6 +31,10 @@ class SearchPage extends React.Component {
           })
         }
       })
+    } else {
+      
+      this.setState({books: []})
+    }
     
   }
   sendShelfData(book, shelf) {
@@ -53,7 +57,7 @@ class SearchPage extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-          {books.length !== 0 && books.map((book, index)=>{
+          {(books.length !== 0 && this.state.query !== '') && books.map((book, index)=>{
            return <Book key = {index} book = {book} sendShelfData = {(book, shelf) => {this.sendShelfData(book, shelf)}}
            />
             })
